@@ -1,0 +1,15 @@
+{
+  "id": "anujdevsingh/rsna-knee-corpus384-s4",
+  "title": "rsna-knee-corpus384-s4",
+  "code_file": "corpus384_s4.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": ["dreaddevelopment/knee-raptor-corpus"],
+  "competition_sources": ["rsna-knee-abnormality-detection"],
+  "kernel_sources": [],
+  "model_sources": []
+}

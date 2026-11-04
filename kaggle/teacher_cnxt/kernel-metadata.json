@@ -1,0 +1,19 @@
+{
+  "id": "anujdevsingh/rsna-knee-teacher-cnxt",
+  "title": "rsna-knee-teacher-cnxt",
+  "code_file": "teacher_cnxt.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [
+    "dreaddevelopment/knee-raptor-corpus",
+    "dreaddevelopment/knee-raptor-corpus-ext"
+  ],
+  "competition_sources": [],
+  "kernel_sources": ["anujdevsingh/rsna-knee-labels-merge"],
+  "model_sources": []
+}

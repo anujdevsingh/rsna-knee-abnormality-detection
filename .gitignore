@@ -1,0 +1,16 @@
+data/
+cache/
+outputs/
+private/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+*.ckpt
+*.pth
+*.pt
+*.npy
+*.npz
+kaggle/*/kernel.py
+CLAUDE.md
+KICKOFF.md

@@ -1,0 +1,15 @@
+{
+  "id": "anujdevsingh/rsna-knee-pseudo-labels",
+  "title": "rsna-knee-pseudo-labels",
+  "code_file": "pseudo_labels.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": ["anujdevsingh/rsna-knee-labels-merge", "anujdevsingh/rsna-knee-teacher-cnxt"],
+  "model_sources": []
+}

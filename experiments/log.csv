@@ -1,0 +1,28 @@
+id,date,model,cv,lb,notes
+L1,2026-10-14,label set pilkwang report_labels_v2,,,gold58 macro AUC 0.8700 (local CPU)
+L2,2026-10-14,label set steven llm_labels_full / v2 / v4_blend,,,gold58 0.8780 / 0.8873 / 0.8927 (local CPU)
+L3,2026-10-14,label set lixin report_labels_gpt56sol,,,gold58 0.8352; mostly hard 0/1 so many ties (local CPU)
+L4,2026-10-14,merge pilkwang+steven_v4+lixin,,,gold58 mean-merge 0.8948 / rank-merge 0.8933; silent cells 27.3% (Synovitis 84%) (local CPU)
+S1,2026-10-14,teacher_cnxt smoke test,,,synthetic random corpus on CPU; pipeline runs end to end; AUC ~0.5 as expected (not a result)
+T1,2026-10-14,teacher_cnxt v1 convnext_tiny 224 3-fold 8ep mirror aug+TTA,0.8712,,weak-label OOF AUC folds 0.8736/0.8671/0.8730; gold58 3-fold ensemble 0.8856 (labels-merge itself 0.8933); weakest MCL 0.80 / LatMen 0.82-0.83 / Synovitis gold 0.795; ~65 min T4x2
+P1,2026-10-14,pseudo labels from T1 OOF (silent->OOF w0.5; mentioned 50/50; drop |L-P|>=0.8),,,gold58 of the target rule 0.9213 vs report labels 0.8933 vs teacher 0.8856; 0.74% cells dropped
+C1,2026-10-14,prep_check: rebuild corpus from DICOMs,,,span15-85 crop140: r 1.0000 MAD 0.00 (exact); span06 r 0.759; span10 r 0.850
+I0,2026-10-14,infer_check: teacher T1 3 folds on the 3 public test studies (CPU),,,3/3 scored, 0 errors, columns/ids match sample_submission
+SUB1,2026-10-14,submission v1 = teacher T1 via rsna-knee-infer v1,0.8712,0.901,public LB 0.901; rank ~4012-4022 of 5958 (bronze line 0.956); hidden-test rerun finished in ~15 min with no error
+C2,2026-10-14,dense corpus 96 slices 288px span 6-94% (3 shards),,,4407 studies; 0 fails; 0 slice read errors; mean valid slices 92.0-92.6/96; self-check vs Raptor r 1.0000 x9; ~16-21 min decode per shard
+S2,2026-10-14,student_cnxt v1 convnext_tiny 288 5-fold 8ep on P1 pseudo labels,0.8917,,weak OOF folds 0.8946/0.8948/0.8847/0.8874/0.8970; gold58 5-fold ensemble 0.8965 (teacher 0.8856); ~2.5 h T4x2
+SUB2,2026-10-14,submission v2 = student S2 via rsna-knee-infer v2,0.8917,0.902,public 0.902 (v1 teacher 0.901): CV gain (weak +0.02 gold58 +0.011) did not carry to LB; ~4012 of 5966
+D1,2026-10-14,student_dense v1 convnext_tiny 288 4-fold 8ep k16/32 on dense corpus + P1 pseudo labels,0.8960,,weak OOF folds 0.8977/0.8915/0.8936/0.9013; gold58 4-fold ensemble 0.9028 (44-slice student 0.8965); ~2.4 h T4x2
+SUB3,2026-10-14,submission v3 = dense student D1 via rsna-knee-infer v3,0.8960,0.909,public 0.909 (+0.007 vs 44-slice student 0.902); rank ~3925 of 5967
+B1,2026-10-14,offline blend dense D1 + student S2 (rank),,,w_dense 0.5: weak 0.8964 gold 0.9004; 0.7: 0.8968/0.9024; dense alone 0.8959/0.9028 -> no gain; not submitted
+C3,2026-10-14,dense corpus at 384 px (6 shards; same 96-slice recipe),,,4407 studies; 0 fails; 0 slice read errors; mean valid 91.9-92.8/96; self-check r 1.0000 x18; ~9-10 min decode per shard
+X1,2026-10-14,student_s384 convnext_small 384 folds 0-1 of fold4 6ep k12/24 on 384 corpus + P1 pseudo labels,0.8911,,weak folds 0.8929/0.8892 vs dense D1 same folds 0.8977/0.8915; gold58 0.8955/0.8938 vs 0.9070/0.8921; 2-fold gold ens 0.8990 vs 0.9032; rank blend 50/50 weak 0.8949 gold 0.9025 (no gain); no OOM; ~2.2 h T4x2; still rising at last epoch
+P2,2026-10-15,pseudo labels v2 from dense D1 OOF (same rule),,,gold58 of the target rule 0.9292 vs v1 0.9213 (blend 0.3/0.5/0.7: 0.9277/0.9292/0.9257); 0.46% cells dropped
+M1,2026-10-15,PatientSex stacker on dense D1 OOF (Kaggle CPU),,,weak 0.8954 vs 0.8953 base; gold58 0.9011 vs 0.9028 -> no gain; age blank in headers
+D2,2026-10-15,student_dense_v2 = D1 setup on pseudo labels v2; folds 0-1 of fold4,0.8977,,weak folds 0.9020/0.8934 vs D1 0.8977/0.8915; gold58 0.9098/0.8950 vs 0.9070/0.8921; 2-fold gold ens 0.9072 vs 0.9032; gold vs D1 4-fold: V2 0.9072, D1 0.9028, avg 0.9059; ~1.3 h T4x2
+SUB4,2026-10-15,submission v5 = rank blend D1 (4 folds) + D2 (folds 0-1) via rsna-knee-infer v5,,0.909,public 0.909 = same as D1 alone (gold58 +0.003 did not show); rank ~3969 of 6019; scoring took ~50 min
+D3,2026-10-19,student_dense_v2full convnext_tiny 288 4-fold 12ep k16/32 on pseudo labels v2,0.9035,,weak folds 0.9072/0.9002/0.9002/0.9063; gold58 4-fold ens 0.9072 (D1 0.9028); ~4.1 h T4x2
+E1,2026-10-19,student_effv2s tf_efficientnetv2_s 288 4-fold 10ep k16/32 on pseudo labels v2,0.8965,,weak folds 0.8996/0.8905/0.8956/0.9001; gold58 ens 0.9006; rank blends: D3+E1 weak 0.9027 gold 0.9053; D1+D3+E1 0.9017/0.9049 (D3 alone best); ~3.6 h
+SUB5,2026-10-19,submission v6 = dense v2 full D3,0.9035,0.914,public 0.914 (+0.005 vs 0.909); rank ~4085 of 6218
+SUB6,2026-10-19,submission v7 = rank blend D3 + E1,0.9027,0.914,public 0.914 = same as D3 alone
+P3,2026-10-19,pseudo labels v3 check from D3 OOF (CPU only),,,gold58 of rule b0.5: 0.9258 (D3) / 0.9241 (D3+E1) vs v2 0.9292 -> worse; not built

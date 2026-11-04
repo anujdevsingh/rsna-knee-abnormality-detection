@@ -1,0 +1,15 @@
+{
+  "id": "anujdevsingh/rsna-knee-infer-check",
+  "title": "rsna-knee-infer-check",
+  "code_file": "infer_check.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "competition_sources": ["rsna-knee-abnormality-detection"],
+  "kernel_sources": ["anujdevsingh/rsna-knee-teacher-cnxt"],
+  "model_sources": []
+}

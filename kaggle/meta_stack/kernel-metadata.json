@@ -1,0 +1,15 @@
+{
+  "id": "anujdevsingh/rsna-knee-meta-stack",
+  "title": "rsna-knee-meta-stack",
+  "code_file": "meta_stack.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": false,
+  "dataset_sources": [],
+  "competition_sources": ["rsna-knee-abnormality-detection"],
+  "kernel_sources": ["anujdevsingh/rsna-knee-labels-merge", "anujdevsingh/rsna-knee-student-dense"],
+  "model_sources": []
+}

@@ -1,0 +1,25 @@
+{
+  "id": "anujdevsingh/rsna-knee-student-s384",
+  "title": "rsna-knee-student-s384",
+  "code_file": "student_s384.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "machine_shape": "NvidiaTeslaT4",
+  "dataset_sources": [],
+  "competition_sources": [],
+  "kernel_sources": [
+    "anujdevsingh/rsna-knee-labels-merge",
+    "anujdevsingh/rsna-knee-pseudo-labels",
+    "anujdevsingh/rsna-knee-corpus384-s0",
+    "anujdevsingh/rsna-knee-corpus384-s1",
+    "anujdevsingh/rsna-knee-corpus384-s2",
+    "anujdevsingh/rsna-knee-corpus384-s3",
+    "anujdevsingh/rsna-knee-corpus384-s4",
+    "anujdevsingh/rsna-knee-corpus384-s5"
+  ],
+  "model_sources": []
+}
